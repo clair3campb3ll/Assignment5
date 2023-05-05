@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
@@ -133,8 +135,8 @@ public class Graph
         
         while( !pq.isEmpty( ) && nodesSeen < vertexMap.size( ) )
         {
-            queueCount+=(int)((Math.log(pq.size()))/(Math.log(2)));
-            totalCount+=(int)((Math.log(pq.size()))/(Math.log(2)));
+            queueCount+=(int)((Math.log(pq.size()))/(Math.log(2))); // instrumentation
+            totalCount+=(int)((Math.log(pq.size()))/(Math.log(2))); // instrumentation
             Path vrec = pq.remove( );
             Vertex v = vrec.dest;
             if( v.scratch != 0 )  // already processed v
@@ -160,11 +162,12 @@ public class Graph
                     w.dist = v.dist +cvw;
                     w.prev = v;
                     pq.add( new Path( w, w.dist ) );
-                    queueCount+=(int)((Math.log(pq.size()))/(Math.log(2))); 
-                    totalCount+=(int)((Math.log(pq.size()))/(Math.log(2)));
+                    queueCount+=(int)((Math.log(pq.size()))/(Math.log(2))); //instrumentation
+                    totalCount+=(int)((Math.log(pq.size()))/(Math.log(2))); // instrumentation
                 }
             }
         }
+        // instrumentation output
         System.out.println("Number of vertex processing operations: "+ vertexCount);
         System.out.println("Number of edge processing operations: "+edgeCount);
         System.out.println("Number of priority queue operations: " + queueCount);

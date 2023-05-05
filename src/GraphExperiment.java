@@ -1,4 +1,5 @@
 /**
+ * <h1>GraphExperiment</h1>
  * The GraphExperiment class is used to create and load graphs into text files, and then use Dijkstra's shortest paths 
  * algorithm to find the shortest path from a specified starting node to all other nodes in the graph. 
  * 
@@ -8,7 +9,7 @@
  * The graph data is stored in a HashMap where the keys are a combination of two nodes (source and destination) 
  * and the value is the weight of the edge connecting the two nodes.
  * 
- * 
+ * @author Claire Campbell
  */
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -16,6 +17,9 @@ import java.io.IOException;
 import java.util.*;
 
 public class GraphExperiment {
+    /**
+     * 
+     */
     private static final int cost = 10;
 
     public static void main(String[] args) {
@@ -39,7 +43,7 @@ public class GraphExperiment {
                     String vertices = source + " " + dest;
                     int weight = random.nextInt(cost);
                     if (source!=dest && !graph.containsKey(vertices)){
-                        graph.put(vertices, weight);
+                        graph.put(vertices, weight); // adds the edge to the HashMap
                     } // end if statement to check that source!=dest
                     else { // if source = dest
                         do {
@@ -47,8 +51,8 @@ public class GraphExperiment {
                             dest = nodes.get(random.nextInt(v));
                             vertices = source + " " + dest;
                             weight = random.nextInt(cost);   
-                        } while (source==dest || graph.containsKey(vertices));
-                        graph.put(vertices, weight);
+                        } while (source==dest || graph.containsKey(vertices)); // loops until the criteria is met for an edge
+                        graph.put(vertices, weight); // adds the edge to the HashMap
                     }
                 } 
                 // Load the graph (stored in the Hashmap) into a textfile in the same format as Graph1.txt:
@@ -56,7 +60,7 @@ public class GraphExperiment {
                 try {
                 FileWriter writer = new FileWriter(filename);  
                 for (Map.Entry<String, Integer> entry : graph.entrySet()){
-                    String line = entry.getKey() + " " + entry.getValue()+"\n";
+                    String line = entry.getKey() + " " + entry.getValue()+"\n"; // read each line of HashMap into a textfile
                     writer.write(line);
                 }
                 writer.close();
@@ -77,6 +81,7 @@ public class GraphExperiment {
                     String line;
                     while( graphFile.hasNextLine( ) )
                     {
+                        // Loads the dataset into a textfile
                         line = graphFile.nextLine( );
                         StringTokenizer st = new StringTokenizer( line );
 
@@ -89,7 +94,7 @@ public class GraphExperiment {
                             String source  = st.nextToken( );
                             String dest    = st.nextToken( );
                             int    cost    = Integer.parseInt( st.nextToken( ) );
-                            g.addEdge( source, dest, cost );
+                            g.addEdge( source, dest, cost ); // adds edge to graph
                         }
                         catch( NumberFormatException error )
                         { System.err.println( "Skipping ill-formatted line " + line ); }
@@ -99,7 +104,7 @@ public class GraphExperiment {
                     System.err.println(error);
                 }
                 System.out.println("\nGraph with "+ Integer.toString(v)+" vertices and "+ Integer.toString(e)+ " edges");
-                g.dijkstra("Node001");
+                g.dijkstra("Node001"); // performing Dijkstra's shortest paths algorithm to all nodes from Node001
                 
             } // for varied edges
         } // for varied vertices
