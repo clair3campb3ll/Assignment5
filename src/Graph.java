@@ -126,6 +126,8 @@ public class Graph
         pq.add( new Path( start, 0 ) ); start.dist = 0;
         
         int nodesSeen = 0;
+        int vertexCount = 0;
+        int edgeCount = 0;
         while( !pq.isEmpty( ) && nodesSeen < vertexMap.size( ) )
         {
             Path vrec = pq.remove( );
@@ -135,6 +137,7 @@ public class Graph
                 
             v.scratch = 1;
             nodesSeen++;
+            vertexCount++;
 
             for( Edge e : v.adj )
             {
@@ -149,9 +152,12 @@ public class Graph
                     w.dist = v.dist +cvw;
                     w.prev = v;
                     pq.add( new Path( w, w.dist ) );
+                    edgeCount++;
                 }
             }
         }
+        System.out.println("Number of vertex processing operations: "+vertexCount);
+        System.out.println("Number of edge processing operations: "+edgeCount);
     }
     
     /**

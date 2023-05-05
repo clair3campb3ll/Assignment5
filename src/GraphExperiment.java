@@ -86,8 +86,12 @@ public class GraphExperiment {
                 } catch (IOException error) {
                     System.err.println(error);
                 }
-            }
-        }
+                System.out.println("\nGraph with "+ Integer.toString(v)+" vertices and "+ Integer.toString(e)+ " edges");
+                g.dijkstra("Node001");
+                
+            } // for varied edges
+        } // for varied vertices
 
     } // end main class
+
 } // end GraphExperiment class
