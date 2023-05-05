@@ -116,6 +116,7 @@ public class Graph
      */
     public void dijkstra( String startName )
     {
+        
         PriorityQueue<Path> pq = new PriorityQueue<Path>( );
 
         Vertex start = vertexMap.get( startName );
@@ -124,20 +125,25 @@ public class Graph
 
         clearAll( );
         pq.add( new Path( start, 0 ) ); start.dist = 0;
-        
+        int queueCount = 0;
         int nodesSeen = 0;
         int vertexCount = 0;
         int edgeCount = 0;
+        int totalCount = 0;
+        
         while( !pq.isEmpty( ) && nodesSeen < vertexMap.size( ) )
         {
+            queueCount+=(int)((Math.log(pq.size()))/(Math.log(2)));
+            totalCount+=(int)((Math.log(pq.size()))/(Math.log(2)));
             Path vrec = pq.remove( );
             Vertex v = vrec.dest;
             if( v.scratch != 0 )  // already processed v
                 continue;
                 
+            vertexCount++;
             v.scratch = 1;
             nodesSeen++;
-            vertexCount++;
+            
 
             for( Edge e : v.adj )
             {
@@ -146,18 +152,23 @@ public class Graph
                 
                 if( cvw < 0 )
                     throw new GraphException( "Graph has negative edges" );
-                    
+                
+                edgeCount++;
+                totalCount++;
                 if( w.dist > v.dist + cvw )
                 {
                     w.dist = v.dist +cvw;
                     w.prev = v;
                     pq.add( new Path( w, w.dist ) );
-                    edgeCount++;
+                    queueCount+=(int)((Math.log(pq.size()))/(Math.log(2))); 
+                    totalCount+=(int)((Math.log(pq.size()))/(Math.log(2)));
                 }
             }
         }
-        System.out.println("Number of vertex processing operations: "+vertexCount);
+        System.out.println("Number of vertex processing operations: "+ vertexCount);
         System.out.println("Number of edge processing operations: "+edgeCount);
+        System.out.println("Number of priority queue operations: " + queueCount);
+        System.out.println("Total operations: "+totalCount);
     }
     
     /**
