@@ -108,37 +108,7 @@ public class Graph
         for( Vertex v : vertexMap.values( ) )
             v.reset( );
     }
-
-    /**
-     * Single-source unweighted shortest-path algorithm.
-     */
-    public void unweighted( String startName )
-    {
-        clearAll( ); 
-
-        Vertex start = vertexMap.get( startName );
-        if( start == null )
-            throw new NoSuchElementException( "Start vertex not found" );
-
-        Queue<Vertex> q = new LinkedList<Vertex>( );
-        q.add( start ); start.dist = 0;
-
-        while( !q.isEmpty( ) )
-        {
-            Vertex v = q.remove( );
-
-            for( Edge e : v.adj )
-            {
-                Vertex w = e.dest;
-                if( w.dist == INFINITY )
-                {
-                    w.dist = v.dist + 1;
-                    w.prev = v;
-                    q.add( w );
-                }
-            }
-        }
-    }
+    
 
     /**
      * Single-source weighted shortest-path algorithm. (Dijkstra) 
@@ -183,99 +153,7 @@ public class Graph
             }
         }
     }
-
-    /**
-     * Single-source negative-weighted shortest-path algorithm.
-     * Bellman-Ford Algorithm
-     */
-    public void negative( String startName )
-    {
-        clearAll( ); 
-
-        Vertex start = vertexMap.get( startName );
-        if( start == null )
-            throw new NoSuchElementException( "Start vertex not found" );
-
-        Queue<Vertex> q = new LinkedList<Vertex>( );
-        q.add( start ); start.dist = 0; start.scratch++;
-
-        while( !q.isEmpty( ) )
-        {
-            Vertex v = q.remove( );
-            if( v.scratch++ > 2 * vertexMap.size( ) )
-                throw new GraphException( "Negative cycle detected" );
-
-            for( Edge e : v.adj )
-            {
-                Vertex w = e.dest;
-                double cvw = e.cost;
-                
-                if( w.dist > v.dist + cvw )
-                {
-                    w.dist = v.dist + cvw;
-                    w.prev = v;
-                      // Enqueue only if not already on the queue
-                    if( w.scratch++ % 2 == 0 )
-                        q.add( w );
-                    else
-                        w.scratch--;  // undo the enqueue increment    
-                }
-            }
-        }
-    }
-
-    /**
-     * Single-source negative-weighted acyclic-graph shortest-path algorithm.
-     */
-    public void acyclic( String startName )
-    {
-        Vertex start = vertexMap.get( startName );
-        if( start == null )
-            throw new NoSuchElementException( "Start vertex not found" );
-
-        clearAll( ); 
-        Queue<Vertex> q = new LinkedList<Vertex>( );
-        start.dist = 0;
-        
-          // Compute the indegrees
-		Collection<Vertex> vertexSet = vertexMap.values( );
-        for( Vertex v : vertexSet )
-            for( Edge e : v.adj )
-                e.dest.scratch++;
-            
-          // Enqueue vertices of indegree zero
-        for( Vertex v : vertexSet )
-            if( v.scratch == 0 )
-                q.add( v );
-       
-        int iterations;
-        for( iterations = 0; !q.isEmpty( ); iterations++ )
-        {
-            Vertex v = q.remove( );
-
-            for( Edge e : v.adj )
-            {
-                Vertex w = e.dest;
-                double cvw = e.cost;
-                
-                if( --w.scratch == 0 )
-                    q.add( w );
-                
-                if( v.dist == INFINITY )
-                    continue;    
-                
-                if( w.dist > v.dist + cvw )
-                {
-                    w.dist = v.dist + cvw;
-                    w.prev = v;
-                }
-            }
-        }
-        
-        if( iterations != vertexMap.size( ) )
-            throw new GraphException( "Graph has a cycle!" );
-    }
-
+    
     /**
      * Process a request; return false if end of file.
      */
@@ -299,8 +177,6 @@ public class Graph
                 g.dijkstra( startName );
                 g.printPath( destName );
             }
-            else if( alg.equals( "n" ) )
-                g.negative( startName );
             else if( alg.equals( "a" ) )
                 g.acyclic( startName );
                     
