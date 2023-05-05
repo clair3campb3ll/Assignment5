@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * <h1>Graph Class<\h1>
+ * <p>
+ * This class evaluates the shortest paths using Dijkstra's algorithm
  */
 import java.io.File;
 import java.io.FileReader;

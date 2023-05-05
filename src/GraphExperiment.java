@@ -17,7 +17,8 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Graph Experiment Class 
+ * Graph Experiment Class: generate graphs and load them into a textfile, read the textfiles into graphs and
+ * perform Dijkstra's shortest paths algorithm
  */
 public class GraphExperiment {
     private static final int cost = 10;
