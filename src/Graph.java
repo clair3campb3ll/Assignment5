@@ -169,17 +169,12 @@ public class Graph
 
             System.out.print( "Enter algorithm (u, d, n, a ): " );
             String alg = in.nextLine( );
-            
-            if( alg.equals( "u" ) )
-                g.unweighted( startName );
-            else if( alg.equals( "d" ) )    
+
+            if( alg.equals( "d" ) )    
             {
                 g.dijkstra( startName );
                 g.printPath( destName );
-            }
-            else if( alg.equals( "a" ) )
-                g.acyclic( startName );
-                    
+            }    
             g.printPath( destName );
         }
         catch( NoSuchElementException e )
