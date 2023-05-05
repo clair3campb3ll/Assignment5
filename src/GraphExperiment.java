@@ -2,13 +2,13 @@
  * <h1>GraphExperiment</h1>
  * The GraphExperiment class is used to create and load graphs into text files, and then use Dijkstra's shortest paths 
  * algorithm to find the shortest path from a specified starting node to all other nodes in the graph. 
- * 
+ * <p>
  * The program generates graphs with varying numbers of vertices and edges, and stores them in text files with the 
  * format "dataset.V.E" where V is the number of vertices and E is the number of edges. 
- * 
+ * <p>
  * The graph data is stored in a HashMap where the keys are a combination of two nodes (source and destination) 
  * and the value is the weight of the edge connecting the two nodes.
- * 
+ * <p>
  * @author Claire Campbell
  */
 import java.io.FileReader;
@@ -16,10 +16,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * Graph Experiment Class 
+ */
 public class GraphExperiment {
-    /**
-     * 
-     */
     private static final int cost = 10;
 
     public static void main(String[] args) {
